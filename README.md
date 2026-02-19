@@ -10,10 +10,12 @@ Oscilloscope measurements showed that the system uses 3.3-volt logic levels. It 
 ![photo_5238090300176144052_y](https://github.com/user-attachments/assets/b81c47f0-5289-4dd1-b975-9087e74f0dde)
 ![photo_5238090300176144050_y](https://github.com/user-attachments/assets/eea29c4f-82ab-40da-95f8-bff9f15ed4f3)
 
+I'm usу Teensy 4.0 but you can use any controller with 3.3 volt logic
+![photo_5240342099989829620_y](https://github.com/user-attachments/assets/7d2d1550-1b77-4596-adaa-6f2bcdf0dc4d)
 
 
 
-The data could be read using a CH340 adapter. After connecting TX gyro sensor to RX CH340 and opening the serial monitor, I received a stream of bytes.
+The data could be read using a CH340 adapter or sketch "read1byte.ino". After connecting TX gyro sensor to RX CH340 and opening the serial monitor, I received a stream of bytes.
 <img width="350" height="636" alt="Без имени" src="https://github.com/user-attachments/assets/0b8129f6-642c-4762-b61f-7a33f827cb60" />
 ![photo_5240342099989829151_y](https://github.com/user-attachments/assets/6fe78fdf-9373-4853-93e3-7d034a42c473)
 
@@ -45,7 +47,7 @@ I modified the code to allow speed control by sending commands through the seria
 
 The hoverboard behavior when controlled by the original gyroscope boards is as follows: if the hoverboard is lifted off the ground and both pedals (left and right) are pressed, the wheels accelerate to maximum speed and keep spinning until the pedals are released. The behavior is identical when using the emulated gyroscope boards. This suggests that when only one wheel is active, a P controller regulates the speed, while activating both wheels enables a PI controller.
 
-The problem is that when controlling only one wheel (left or right), the rotation speed changes proportionally to the tilt angle. However, when the second wheel is enabled (simulating a pressed pedal button), both wheels accelerate to maximum speed and stop only after the button is released.
+The problem is that when controlling only one wheel (left or right), the rotation speed changes proportionally to the tilt angle. However, when the second wheel is enabled and both wheel rotate in same direction forward or backward  (simulating a pressed pedal button), both wheels accelerate to maximum speed and stop only after the button is released.
 
 I decided to tap into the Hall sensor signals and use them as an encoder to measure rotational speed. However, connecting one Hall sensor directly to a Teensy 4.0 digital input did not work because the signal level was 5 V.
 
